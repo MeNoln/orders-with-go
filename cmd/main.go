@@ -23,7 +23,7 @@ func main() {
 		os.Exit(-1)
 	}
 
-	router := gin.New()
+	router := gin.Default()
 
 	currency.RegisterCurrencyRoutes(router)
 
