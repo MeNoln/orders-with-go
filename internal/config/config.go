@@ -25,7 +25,7 @@ func Load(filename string) (*Config, error) {
 		Port: defaultPort,
 	}
 
-	buffer, err := ioutil.ReadFile(fmt.Sprintf("./config/%s.yaml", filename))
+	buffer, err := ioutil.ReadFile(fmt.Sprintf("../config/%s.yaml", filename))
 	if err != nil {
 		return nil, err
 	}

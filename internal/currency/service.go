@@ -32,9 +32,10 @@ func (s service) CreateCurrency(command *CreateCurrencyCommand) error {
 
 	err := s.repo.Create(currency)
 	if err != nil {
-		log.Fatalln("Failed to create new currency: %s, %s", command.Name, command.Title)
+		log.Fatalf("Failed to create new currency: %s, %s", command.Name, command.Title)
 		return err
 	}
 
+	log.Printf("Currency %s added", command.Name)
 	return nil
 }

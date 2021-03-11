@@ -14,18 +14,20 @@ import (
 func main() {
 	_, err := config.Load(getConfigEnv())
 	if err != nil {
-		log.Fatalln("Failed to setup config")
+		log.Fatalln("Failed to setup config", err.Error())
 		os.Exit(-1)
 	}
 
 	if err = database.ValidateConnectivity(); err != nil {
+		log.Fatalln(err.Error())
 		os.Exit(-1)
 	}
 
-	router := gin.Default()
+	router := gin.New()
+
 	currency.RegisterCurrencyRoutes(router)
 
-	router.Run(fmt.Sprintf(":%s", config.Cfg.Port))
+	router.Run(fmt.Sprintf(":%v", config.Cfg.Port))
 }
 
 func getConfigEnv() string {
