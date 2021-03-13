@@ -1,11 +1,11 @@
 package database
 
 import (
-	"log"
+	log "github.com/sirupsen/logrus"
 
-	"github.com/MeNoln/orders-with-go/internal/config"
 	_ "github.com/jackc/pgx/stdlib" //sql lib
 	"github.com/jmoiron/sqlx"
+	"github.com/spf13/viper"
 )
 
 // ValidateConnectivity checks connection to database at start
@@ -14,21 +14,21 @@ func ValidateConnectivity() error {
 	defer db.Close()
 
 	if err != nil {
-		log.Fatalln("Failed to connect to rdbms")
+		log.Fatal("Failed to connect to rdbms")
 		return err
 	}
 
 	err = db.Ping()
 	if err != nil {
-		log.Fatalln("Failed to ping database")
+		log.Fatal("Failed to ping database")
 		return err
 	}
 
-	log.Println("Database connection valid")
+	log.Info("Database connection valid")
 	return nil
 }
 
 // GetDbContext gets database context
 func GetDbContext() (*sqlx.DB, error) {
-	return sqlx.Connect("pgx", config.Cfg.DB)
+	return sqlx.Connect("pgx", viper.GetString("dbString"))
 }

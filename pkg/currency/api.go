@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/MeNoln/orders-with-go/internal/common"
+	"github.com/MeNoln/orders-with-go/pkg/common"
 	"github.com/gin-gonic/gin"
 )
 

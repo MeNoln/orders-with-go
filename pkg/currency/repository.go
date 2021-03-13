@@ -1,8 +1,8 @@
 package currency
 
 import (
-	"github.com/MeNoln/orders-with-go/internal/domain"
 	"github.com/MeNoln/orders-with-go/pkg/database"
+	"github.com/MeNoln/orders-with-go/pkg/domain"
 	"github.com/jmoiron/sqlx"
 )
 

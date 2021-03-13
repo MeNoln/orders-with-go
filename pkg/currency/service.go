@@ -1,9 +1,9 @@
 package currency
 
 import (
-	"log"
+	log "github.com/sirupsen/logrus"
 
-	"github.com/MeNoln/orders-with-go/internal/domain"
+	"github.com/MeNoln/orders-with-go/pkg/domain"
 )
 
 // Service ...
@@ -34,12 +34,19 @@ func (s service) CreateCurrency(command *CreateCurrencyCommand) error {
 
 	err := s.repo.Create(currency)
 	if err != nil {
-		log.Printf("Failed to create new currency: %s, %s\n", command.Name, command.Title)
-		log.Println(err.Error())
+		log.WithFields(log.Fields{
+			"name":  command.Name,
+			"title": command.Title,
+		}).Fatal("Failed to create new currency: ")
+		log.Fatal(err.Error())
+
 		return err
 	}
 
-	log.Printf("Currency %s added", command.Name)
+	log.WithFields(log.Fields{
+		"name": command.Name,
+	}).Info("Currency added: ")
+
 	return nil
 }
 
@@ -61,7 +68,7 @@ func (s service) GetAll() (*GetAllCurrenciesResponse, error) {
 	var currencyDtos []CurrencyDto
 	currencies, err := s.repo.GetAll()
 	if err != nil {
-		log.Println(err.Error())
+		log.Fatal(err.Error())
 		return nil, err
 	}
 
