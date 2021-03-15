@@ -1,9 +1,11 @@
 package currency
 
 import (
+	"github.com/google/uuid"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/MeNoln/orders-with-go/pkg/domain"
+	"github.com/MeNoln/orders-with-go/pkg/eventbus"
 )
 
 // Service ...
@@ -42,6 +44,11 @@ func (s service) CreateCurrency(command *CreateCurrencyCommand) error {
 
 		return err
 	}
+
+	go eventbus.Publish(domain.CurrencyCreatedEvent{
+		MsgId: uuid.New().String(),
+		Title: currency.Title,
+	})
 
 	log.WithFields(log.Fields{
 		"name": command.Name,
